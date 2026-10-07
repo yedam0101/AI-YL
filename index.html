@@ -1,0 +1,65 @@
+﻿<!DOCTYPE html>
+<!--
+W6 Sample 06: Click the Image to Play
+이번 단계: 05번의 그림을 버튼 안에 넣고 클릭하면 음원이 재생되게 합니다.
+사용법: 전체 복사 → 새 메모장 → assets 폴더 옆에 index.html로 저장.
+코드를 외우기보다, 브라우저가 무엇을 하도록 할지 생각하세요.
+-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Click the Image to Play</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 700px;
+      margin: 40px auto;
+      padding: 20px;
+      line-height: 1.6;
+    }
+    button, select {
+      font-size: 18px;
+      padding: 10px 14px;
+      margin-top: 10px;
+      max-width: 100%;
+    }
+    button { cursor: pointer; }
+    img { display: block; width: 100%; height: auto; border-radius: 12px; }
+    figure { margin: 16px 0; }
+    audio { width: 100%; margin-top: 12px; }
+    button:focus-visible { outline: 3px solid #1463ab; outline-offset: 4px; }
+    .note { color: #465363; font-size: 15px; }
+    .picture-button { display: block; padding: 0; border: 2px solid #566e55; border-radius: 14px; background: white; }
+  </style>
+</head>
+<body>
+  <h1>Click the Image to Play</h1>
+  <p>Click the picture to hear the welcome message.</p>
+  <!-- [변경] img를 button으로 감싸면 마우스뿐 아니라 Enter/Space로도 실행됩니다. -->
+  <button class="picture-button" onclick="playSound()" aria-label="Play the welcome message">
+    <img src="assets/images/picture_01.png" alt="A quiet park with trees, a bench and a winding path.">
+  </button>
+  <!-- [변경] controls를 생략하여 재생기를 숨기고 JavaScript에서 실행합니다. -->
+  <audio id="sound" preload="metadata" src="assets/audio/sound_01.wav"></audio>
+  <p><button onclick="stopSound()">Stop Sound</button></p>
+  <p class="note">Transcript: Welcome to our city. There are many interesting places to explore.</p>
+  <p id="status" class="note" role="status"></p>
+
+  <script>
+    const sound = document.getElementById("sound");
+    function playSound() {
+      // [추가] 다시 클릭하면 처음부터 재생합니다.
+      sound.currentTime = 0;
+      document.getElementById("status").textContent = "";
+      sound.play().catch(function () {
+        document.getElementById("status").textContent = "Audio could not play. Check the assets folder and try again.";
+      });
+    }
+    function stopSound() {
+      sound.pause();
+      sound.currentTime = 0;
+    }
+  </script>
+</body>
+</html>
